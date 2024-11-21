@@ -8,7 +8,7 @@ public class VendorTest {
 
     @BeforeEach
     public void setUp() {
-        vendingMachine = new Vending(10, 20); // Initialize with 10 candies and 20 gums
+        vendingMachine = new Vending(10, 20);
     }
 
     @Test
@@ -41,6 +41,48 @@ public class VendorTest {
 
         Assertions.assertEquals(0, vendingMachine.getBalance());
     }
+    @Test
+    public void BuyItem() {
+        vendingMachine.addMoney(5.00);
+        vendingMachine.select("Candy"); //Candy price 1.25
 
+        // 5.00 - 1.25 = 3.75 for a candy
+        Assertions.assertEquals(3.75, vendingMachine.getBalance());
+
+        // Decrease candy amount by 1
+        Item candy = Vending.getStock().get("Candy");
+        Assertions.assertEquals(9, candy.stock);
+    }
+
+    @Test
+    public void buyItemNoMoney() {
+        vendingMachine.addMoney(0.50);
+        vendingMachine.select("Candy"); //Candy price 1.25
+
+        //Not enough money to buy candy
+        Assertions.assertEquals(0.50, vendingMachine.getBalance());
+
+        //Candy amounts stay the same
+        Item candy = Vending.getStock().get("Candy");
+        Assertions.assertEquals(10, candy.stock);
+    }
+
+    @Test
+    public void buyNonExistentItem() {
+        vendingMachine.addMoney(5.00);
+        vendingMachine.select("Chips"); //Chips is not one of the item
+
+        // Since Chips is not in an item in the vendor, the fund doesn't change
+        Assertions.assertEquals(5.00, vendingMachine.getBalance());
+    }
+
+    @Test
+    public void buyNegative() {
+        vendingMachine.addMoney(5.00);
+        vendingMachine.select("Chips"); //Chips is not one of the item
+
+        // Since Chips is not in an item in the vendor, the fund doesn't change
+        Assertions.assertEquals(5.00, vendingMachine.getBalance());
+    }
 
 }

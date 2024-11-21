@@ -53,6 +53,9 @@ class Vending {
         }
         else System.out.println("Sorry, don't know that item");
     }
+    public static HashMap<String, Item> getStock() {
+        return Stock;
+    }
 
 }
 
