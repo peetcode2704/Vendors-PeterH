@@ -100,6 +100,16 @@ class Vending {
         }
     }
 
+    void removeItem(String name) {
+        if (Stock.containsKey(name)) {
+            Stock.remove(name);
+            System.out.println(name + " has been removed from the inventory.");
+        } else {
+            throw new IllegalArgumentException("Item " + name + " does not exist in the inventory.");
+        }
+    }
+
+
     class Examples {
         }
 }

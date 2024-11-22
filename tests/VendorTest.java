@@ -214,7 +214,18 @@ public class VendorTest {
         Assertions.assertEquals(5, manager.getVendors().size());
     }
 
+    @Test
+    public void testRemoveItem() {
+        vendingMachine.removeItem("Candy");
 
+        Assertions.assertFalse(Vending.getStock().containsKey("Candy"));
+    }
+
+    @Test
+    public void testRemoveNonexistentItem() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> vendingMachine.removeItem("Chips"),
+                "Expected exception when removing a nonexistent item.");
+    }
 
 
 }
