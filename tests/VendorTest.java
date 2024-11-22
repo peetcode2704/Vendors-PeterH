@@ -171,4 +171,29 @@ public class VendorTest {
         Assertions.assertEquals(15, Vending.getStock().get("Chips").stock,
                 "Chips stock should match the restock amount.");
     }
+
+    @Test
+    public void renameExistingItem() {
+        vendingMachine.renameItem("Candy", "BBQ snack");
+
+        // Verify the old name is removed
+        Assertions.assertFalse(Vending.getStock().containsKey("Candy"),
+                "The old item name should no longer exist.");
+        // Check if the new item is in our stock
+        Assertions.assertTrue(Vending.getStock().containsKey("BBQ snack"),
+                "The new item name should exist in the inventory.");
+        //Check if BBQ snack holds the same value of stock as Candy did
+        Assertions.assertEquals(10, Vending.getStock().get("BBQ snack").stock,
+                "The stock of the renamed item should remain unchanged.");
+        //Check if the price of BBQ snack is the same as Candy
+        Assertions.assertEquals(1.25, Vending.getStock().get("BBQ snack").price);
+    }
+
+    @Test
+    public void renameNonexistentItem() {
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                        vendingMachine.renameItem("Nonexistent", "Candy"),
+                "Renaming a non-existent item should throw an exception.");
+    }
+
 }

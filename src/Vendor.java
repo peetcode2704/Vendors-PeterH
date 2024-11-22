@@ -76,8 +76,24 @@ class Vending {
             double defaultPrice = 1.50;
             Stock.put(name, new Item(defaultPrice, amount));        }
     }
+    void renameItem(String oldName, String newName) {
+        //Check if the name of the item exists in our HashMap or not
+        if (!Stock.containsKey(oldName)) {
+            throw new IllegalArgumentException(oldName + "' does not exist.");
+        }
+
+        if (Stock.containsKey(newName)) {
+            throw new IllegalArgumentException(newName + "' already exists.");
+        }
+        // After checking both conditions, get that old item and remove then change to newName
+
+        Item item = Stock.get(oldName);
+        Stock.remove(oldName);
+        Stock.put(newName, item);
+    }
 
 
-        class Examples {
+
+    class Examples {
         }
 }
