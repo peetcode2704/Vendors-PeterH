@@ -17,30 +17,35 @@ public class VendorTest {
 
         Assertions.assertEquals(5.00, vendingMachine.getBalance());
     }
+
     @Test
     public void testAddNoMoney() {
         vendingMachine.addMoney(0);
 
         Assertions.assertEquals(0, vendingMachine.getBalance());
     }
+
     @Test
     public void testAddNegativeMoney() {
         vendingMachine.addMoney(-50);
 
         Assertions.assertEquals(0, vendingMachine.getBalance());
     }
+
     @Test
     public void testAddTooMuchMoney() {
         vendingMachine.addMoney(Integer.MAX_VALUE);
 
         Assertions.assertEquals(Integer.MAX_VALUE, vendingMachine.getBalance());
     }
+
     @Test
     public void testAddTooMuchMinMoney() {
         vendingMachine.addMoney(Integer.MIN_VALUE);
 
         Assertions.assertEquals(0, vendingMachine.getBalance());
     }
+
     @Test
     public void BuyItem() {
         vendingMachine.addMoney(5.00);
@@ -87,8 +92,9 @@ public class VendorTest {
 
     @Test
     public void emptyInventory() {
+        double amountofMoney = 100.00;
 
-        vendingMachine.addMoney(100.00);
+        vendingMachine.addMoney(amountofMoney);
 
         // Purchase all Candy
         while (Vending.getStock().get("Candy").stock > 0) {
@@ -105,7 +111,47 @@ public class VendorTest {
         Assertions.assertEquals(0, Vending.getStock().get("Gum").stock);
 
         // Check for the remaining balance
-        double remainingBalance = vendingMachine.getBalance() - (10 * 1.25) - (20 * 0.50);
+        // 100 - 12.5 - 10 = 77.5
+        double remainingBalance = amountofMoney - (10 * 1.25) - (20 * 0.50);
         Assertions.assertEquals(remainingBalance, vendingMachine.getBalance());
     }
+
+    @Test
+    public void restockItem() {
+        // Restock Candy
+        vendingMachine.restockItem("Candy", 5);
+
+        // Verify new stock count
+        Assertions.assertEquals(15, Vending.getStock().get("Candy").stock);
+    }
+
+    @Test
+    public void restockItemNegative() {
+        // Restock Candy
+        vendingMachine.restockItem("Candy", -5);
+
+        // Verify new stock count
+        Assertions.assertEquals(10, Vending.getStock().get("Candy").stock);
+    }
+
+    @Test
+    public void restockItemNonexist() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> vendingMachine.restockItem("Chocolate", 5),
+                "Sorry, we don't have that item");
+    }
+
+    @Test
+    public void restockItemMaxValue() {
+        vendingMachine.restockItem("Candy", Integer.MAX_VALUE);
+
+        Assertions.assertEquals(10, Vending.getStock().get("Candy").stock);
+    }
+
+    public void restockItemMinValue() {
+        vendingMachine.restockItem("Candy", Integer.MIN_VALUE);
+
+        Assertions.assertEquals(10, Vending.getStock().get("Candy").stock);
+    }
+
 }
