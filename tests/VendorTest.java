@@ -241,6 +241,13 @@ public class VendorTest {
         Assertions.assertEquals(2, vendingMachine.getPurchaseHistory().get("Candy"));
         Assertions.assertEquals(3, vendingMachine.getPurchaseHistory().get("Gum"));
     }
+    @Test
+    public void testNoPurchases() {
+        Assertions.assertEquals(0, vendingMachine.getPurchaseHistory().get("Candy"),
+                "Candy should have no purchases initially.");
+        Assertions.assertEquals(0, vendingMachine.getPurchaseHistory().get("Gum"),
+                "Gum should have no purchases initially.");
+    }
 
 
 
