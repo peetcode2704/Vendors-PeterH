@@ -136,9 +136,14 @@ public class VendorTest {
 
     @Test
     public void restockItemNonexist() {
-
-        Assertions.assertThrows(IllegalArgumentException.class, () -> vendingMachine.restockItem("Chocolate", 5),
-                "Sorry, we don't have that item");
+        // Restock a non-existent item
+        vendingMachine.restockItem("Chocolate", 5);
+        // Check if chocolate is now the new item
+        Assertions.assertTrue(Vending.getStock().containsKey("Chocolate"),
+                "Chocolate should be added to the inventory.");
+        // check if the amount is correct
+        Assertions.assertEquals(5, Vending.getStock().get("Chocolate").stock,
+                "Chocolate stock should match the restock amount.");
     }
 
     @Test
@@ -148,10 +153,22 @@ public class VendorTest {
         Assertions.assertEquals(10, Vending.getStock().get("Candy").stock);
     }
 
+    @Test
     public void restockItemMinValue() {
         vendingMachine.restockItem("Candy", Integer.MIN_VALUE);
 
         Assertions.assertEquals(10, Vending.getStock().get("Candy").stock);
     }
 
+    @Test
+    public void restockItemChips() {
+        // Restock a non-existent item
+        vendingMachine.restockItem("Chips", 15);
+        // Check if chocolate is now the new item
+        Assertions.assertTrue(Vending.getStock().containsKey("Chips"),
+                "Chips should be added to the inventory.");
+        // check if the amount is correct
+        Assertions.assertEquals(15, Vending.getStock().get("Chips").stock,
+                "Chips stock should match the restock amount.");
+    }
 }

@@ -73,8 +73,8 @@ class Vending {
             }
         }
         else {
-            throw new IllegalArgumentException("Sorry, we don't have that item");
-        }
+            double defaultPrice = 1.50;
+            Stock.put(name, new Item(defaultPrice, amount));        }
     }
 
 
