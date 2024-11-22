@@ -135,6 +135,13 @@ class Vending {
             throw new IllegalArgumentException("Item not found in inventory");
         }
     }
+    void setBestseller(String itemName, boolean isBestseller) {
+        if (Stock.containsKey(itemName)) {
+            Stock.get(itemName).setAsBestseller(isBestseller);
+        } else {
+            throw new IllegalArgumentException("Item not found in inventory");
+        }
+    }
 
     class Examples {
 
