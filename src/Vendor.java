@@ -7,11 +7,15 @@ import java.util.HashMap;
  */
 class Vending {
     private static HashMap<String, Item> Stock = new HashMap<String, Item>();
+    private HashMap<String, Integer> purchaseHistory = new HashMap<>();
+
     private double balance;
 
     Vending(int numCandy, int numGum) {
         Stock.put("Candy", new Item(1.25, numCandy));
         Stock.put("Gum", new Item(.5, numGum));
+        purchaseHistory.put("Candy", 0);
+        purchaseHistory.put("Gum", 0);
         this.balance = 0;
     }
 
@@ -53,6 +57,8 @@ class Vending {
             if (balance >= item.price) {
                 item.purchase(1);
                 this.balance = this.balance - item.price;
+                purchaseHistory.put(name, purchaseHistory.getOrDefault(name, 0) + 1);
+
             } else
                 System.out.println("Gimme more money");
         } else System.out.println("Sorry, don't know that item");
@@ -109,7 +115,12 @@ class Vending {
         }
     }
 
+    HashMap<String, Integer> getPurchaseHistory() {
+        return purchaseHistory;
+    }
+
 
     class Examples {
+
         }
 }

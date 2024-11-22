@@ -222,10 +222,26 @@ public class VendorTest {
     }
 
     @Test
-    public void testRemoveNonexistentItem() {
+    public void testRemoveNonexistItem() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> vendingMachine.removeItem("Chips"),
                 "Expected exception when removing a nonexistent item.");
     }
+
+    @Test
+    public void testMultiplePurchases() {
+        vendingMachine.addMoney(5.00);
+        vendingMachine.select("Candy");
+        vendingMachine.select("Candy");
+        vendingMachine.select("Gum");
+        vendingMachine.select("Gum");
+        vendingMachine.select("Gum");
+
+
+
+        Assertions.assertEquals(2, vendingMachine.getPurchaseHistory().get("Candy"));
+        Assertions.assertEquals(3, vendingMachine.getPurchaseHistory().get("Gum"));
+    }
+
 
 
 }
