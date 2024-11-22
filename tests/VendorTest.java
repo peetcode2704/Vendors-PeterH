@@ -85,4 +85,27 @@ public class VendorTest {
         Assertions.assertEquals(5.00, vendingMachine.getBalance());
     }
 
+    @Test
+    public void emptyInventory() {
+
+        vendingMachine.addMoney(100.00);
+
+        // Purchase all Candy
+        while (Vending.getStock().get("Candy").stock > 0) {
+            vendingMachine.select("Candy");
+        }
+
+        // Purchase all Gum
+        while (Vending.getStock().get("Gum").stock > 0) {
+            vendingMachine.select("Gum");
+        }
+
+        // Verify that all items are out of stock
+        Assertions.assertEquals(0, Vending.getStock().get("Candy").stock);
+        Assertions.assertEquals(0, Vending.getStock().get("Gum").stock);
+
+        // Check for the remaining balance
+        double remainingBalance = vendingMachine.getBalance() - (10 * 1.25) - (20 * 0.50);
+        Assertions.assertEquals(remainingBalance, vendingMachine.getBalance());
+    }
 }
