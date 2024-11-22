@@ -3,11 +3,13 @@ class Item {
     int stock;
 
     String description;
+    double discount;
 
     Item(double price, int numPieces, String description) {
         this.price = price;
         this.stock = numPieces;
         this.description = description;
+        this.discount = 0;
     }
 
     void restock(int amount) {
@@ -20,4 +22,19 @@ class Item {
     String getDescription() {
         return description;
     }
+    void setDiscount(double discount) {
+        if (discount < 0 || discount > 1) {
+            throw new IllegalArgumentException("Discount must be between 0 and 1");
+        }
+        this.discount = discount;
+    }
+    String getDiscount() {
+        return (discount * 100) + "% off";
+    }
+
+    double getPrice() {
+        return price * (1 - discount);
+    }
+
+
 }

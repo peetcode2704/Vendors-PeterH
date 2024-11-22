@@ -257,6 +257,17 @@ public class VendorTest {
     public void testGetNonexistentItemDetails() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> vendingMachine.getItemDetails("Chips"));
     }
+    @Test
+    public void testApplyDiscountToItem() {
+        vendingMachine.applyDiscount("Candy", 0.2);
+        //1.25 * 20% = .25 => 1.25 - .25 = 1.00
+        Assertions.assertEquals(1.00, Vending.getStock().get("Candy").getPrice());
+    }
+    public void testInvalidDiscount() {
+        // Try applying an invalid discount (greater than 100%)
+        Assertions.assertThrows(IllegalArgumentException.class, () -> vendingMachine.applyDiscount("Candy", 1.5),
+                "Discount should be between 0 and 1.");
+    }
 
 
 }

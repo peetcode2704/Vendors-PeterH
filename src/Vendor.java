@@ -128,6 +128,13 @@ class Vending {
         }
     }
 
+    void applyDiscount(String itemName, double discount) {
+        if (Stock.containsKey(itemName)) {
+            Stock.get(itemName).setDiscount(discount);
+        } else {
+            throw new IllegalArgumentException("Item not found in inventory");
+        }
+    }
 
     class Examples {
 
