@@ -249,6 +249,14 @@ public class VendorTest {
                 "Gum should have no purchases initially.");
     }
 
+    public void testGetItemDetails() {
+        String Details = "Name: Candy\nPrice: $1.25\nStock: 10\nDescription: A sweet lemon candy";
+        Assertions.assertEquals(Details, vendingMachine.getItemDetails("Candy"));
+    }
+    @Test
+    public void testGetNonexistentItemDetails() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> vendingMachine.getItemDetails("Chips"));
+    }
 
 
 }

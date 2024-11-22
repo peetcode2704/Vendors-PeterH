@@ -12,8 +12,8 @@ class Vending {
     private double balance;
 
     Vending(int numCandy, int numGum) {
-        Stock.put("Candy", new Item(1.25, numCandy));
-        Stock.put("Gum", new Item(.5, numGum));
+        Stock.put("Candy", new Item(1.25, numCandy,"A sweet lemon candy"));
+        Stock.put("Gum", new Item(.5, numGum, "A pack of mint gum for fresh breath"));
         purchaseHistory.put("Candy", 0);
         purchaseHistory.put("Gum", 0);
         this.balance = 0;
@@ -80,7 +80,7 @@ class Vending {
         }
         else {
             double defaultPrice = 1.50;
-            Stock.put(name, new Item(defaultPrice, amount));        }
+            Stock.put(name, new Item(defaultPrice, amount,"Item description"));        }
     }
     void renameItem(String oldName, String newName) {
         //Check if the name of the item exists in our HashMap or not
@@ -117,6 +117,15 @@ class Vending {
 
     HashMap<String, Integer> getPurchaseHistory() {
         return purchaseHistory;
+    }
+
+    String getItemDetails(String name) {
+        if (Stock.containsKey(name)) {
+            Item item = Stock.get(name);
+            return "Name: " + name + "\nPrice: $" + item.price + "\nStock: " + item.stock + "\nDescription: " + item.getDescription();
+        } else {
+            throw new IllegalArgumentException("Item " + name + " does not exist in the inventory.");
+        }
     }
 
 
