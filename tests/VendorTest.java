@@ -196,4 +196,25 @@ public class VendorTest {
                 "Renaming a non-existent item should throw an exception.");
     }
 
+    @Test
+    public void testAddVendors() {
+        VendorManager manager = new VendorManager();
+        Vending vendor1 = new Vending(3, 4);
+        Vending vendor2 = new Vending(5, 6);
+        Vending vendor3 = new Vending(2, 6);
+        Vending vendor4 = new Vending(8, 6);
+        Vending vendor5 = new Vending(9, 6);
+
+        manager.addVendor(vendor1);
+        manager.addVendor(vendor2);
+        manager.addVendor(vendor3);
+        manager.addVendor(vendor4);
+        manager.addVendor(vendor5);
+
+        Assertions.assertEquals(5, manager.getVendors().size());
+    }
+
+
+
+
 }

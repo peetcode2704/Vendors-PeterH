@@ -92,7 +92,13 @@ class Vending {
         Stock.put(newName, item);
     }
 
-
+    void printInventory() {
+        System.out.println("Item Name\tPrice\tStock");
+        for (String itemName : Stock.keySet()) {
+            Item item = Stock.get(itemName);
+            System.out.println(itemName + "\t\t$" + item.price + "\t" + item.stock);
+        }
+    }
 
     class Examples {
         }
